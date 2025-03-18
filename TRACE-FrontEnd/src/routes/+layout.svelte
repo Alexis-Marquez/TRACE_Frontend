@@ -3,15 +3,17 @@
 </script>
 
 <nav class="side-bar">
-    <div class="side-bar-section">
-
+    <div class="side-bar-section top">
+        <a class="side-bar-logo-link" href="./" aria-label="Home link">
+            <img class="side-bar-logo" src="./favicon.png" alt="TRACE logo">
+        </a>
     </div>
-    <div class="side-bar-section">
+    <div class="side-bar-section mid">
     <button class="side-bar-button" aria-label="crawler button"></button>
     <button class="side-bar-button" aria-label="network tree button"></button>
     <button class="side-bar-button" aria-label="wordlist button"></button>
     </div>
-    <div class="side-bar-section">
+    <div class="side-bar-section bottom">
     <button class="side-bar-button" aria-label="config-button"></button>
     </div>
 </nav>
@@ -32,16 +34,38 @@
     }
     .side-bar-button{
         border-radius: 50%;
-        width: 5vh;
-        height: 5vh;
+        width: 6vh;
+        height: 6vh;
+        background: #cfcfcf;
+        border: none;
     }
     .side-bar-section{
         display: flex;
         flex-direction: column;
         width: 100%;
         height: 100%;
-        justify-content: space-evenly;
         align-items: center;
+    }
+    .side-bar-section.mid{
+       justify-content: center;
+    }
+    .side-bar-section.mid button{
+        margin: 1vh
+    }
+    .side-bar-section.bottom{
+        justify-content: flex-end;
+    }
+    .side-bar-section.bottom button{
+        margin: 3vh;
+    }
+    .side-bar-logo-link{
+        border-radius: 50%;
+        width: 8vh;
+        height: 8vh;
+    }
+    .side-bar-logo{
+        height: 8vh;
+        width: auto;
     }
     .container{
          width: 96%;
