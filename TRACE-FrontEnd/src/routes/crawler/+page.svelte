@@ -1,14 +1,21 @@
 <script>
+    import { goto } from "$app/navigation";
+    let crawling = $state(false)
+    let  urls = [];
     async function startCrawl(event) {
         event.preventDefault();
         crawling = true;
-        urls = [];
+
+        const data = new FormData(event.currentTarget);
 
         const response = await fetch("/api/crawl", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({url: baseUrl, max_depth: depth}),
+            body: JSON.stringify({url: data.get(baseUrl), max_depth: data.get(depth)}),
         })
+        urls = await response.json();
+        crawling = false;
+        await goto(`/results?urls=${encodeURIComponent(JSON.stringify(urls))}`);
     }
 </script>
 
@@ -17,7 +24,7 @@
 <h3 class="page-subtitle">
     Configuration
 </h3>
-    <form class="crawler-config-form" on:submit={startCrawl}>
+    <form class="crawler-config-form" onsubmit={startCrawl}>
         <label for="Target URL">Target URL</label>
         <input id="Target URL" type="text" name="Target URL"/>
         <label for="Crawl depth"> Crawl Depth</label>

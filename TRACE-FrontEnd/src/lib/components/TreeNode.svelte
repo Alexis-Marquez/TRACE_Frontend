@@ -1,6 +1,6 @@
 <script>
     let props = $props();
-    let ip = props.ip || "Unknown IP";  // Handle undefined values
+    let ip = props.ip || "Unknown IP";
     let path = props.path || "Unknown Path";
 </script>
 
