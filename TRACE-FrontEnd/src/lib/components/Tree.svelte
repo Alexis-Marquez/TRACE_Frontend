@@ -12,6 +12,13 @@
             <TreeNode ip={node.ip} path={node.path}/>
             {#if node.children.length > 0}
                 <div class="children">
+                    <svg class="tree-line">
+                        <line x1="50%" y1="0" x2="50%" y2="4%" stroke="black" stroke-width="2" />
+                    </svg>
+                    <svg class="horizontal-line">
+                        <line x1="5%" y1="4%" x2="125%" y2="4%" stroke="black" stroke-width="2" />
+                    </svg>
+
                     <Tree networkMap={node.children} />
 
                 </div>
@@ -27,6 +34,20 @@
         position: relative;
         width: 100%;
     }
+    .tree-line {
+        position: absolute;
+        left: 50%;
+        width: 2px;
+        height: 100%;
+        pointer-events: none;
+    }
+    .horizontal-line{
+        position: absolute;
+        width: fit-content;
+        height: 2px;
+        top: 4%;
+        pointer-events: none;
+    }
 
     .children {
         display: flex;
@@ -36,8 +57,10 @@
         margin-top: 10px;
     }
     .tree-branch{
-        margin-left: 10px;
-        margin-right: 10px;
+        margin-top: 1vw;
+        margin-left: 1vw;
+        margin-right: 1vw;
     }
+
 
 </style>

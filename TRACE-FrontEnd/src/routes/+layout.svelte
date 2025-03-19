@@ -9,8 +9,16 @@
         </a>
     </div>
     <div class="side-bar-section mid">
-    <button class="side-bar-button" aria-label="crawler button"></button>
-    <button class="side-bar-button" aria-label="network tree button"></button>
+    <button class="side-bar-button" aria-label="crawler button" type="button">
+        <a class="side-bar-logo-link" href="./crawler">
+        <img class="side-bar-button-logo" src="./Mapping.png" alt="Network tree logo">
+        </a>
+    </button>
+    <button class="side-bar-button" aria-label="network tree button">
+        <a class="side-bar-logo-link" href="./treeGraph">
+            <img class="side-bar-button-logo" src="./Mapping.png" alt="Network tree logo">
+        </a>
+    </button>
     <button class="side-bar-button" aria-label="wordlist button"></button>
     </div>
     <div class="side-bar-section bottom">
@@ -42,6 +50,16 @@
         height: 6vh;
         background: #cfcfcf;
         border: none;
+        padding: 0;
+    }
+    .side-bar-button-logo{
+        width: 6vh;
+        height: 6vh;
+        border-radius: inherit;
+        margin: 0;
+    }
+    .side-bar-button:hover{
+        border: #7e7d7d;
     }
     .side-bar-section{
         display: flex;
