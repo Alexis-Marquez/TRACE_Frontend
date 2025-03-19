@@ -9,7 +9,7 @@
 <div class="network-tree">
     {#each networkMap as node}
         <div class="tree-branch">
-            <TreeNode url={node.url} path={node.path}/>
+            <TreeNode ip={node.ip} path={node.path}/>
             {#if node.children.length > 0}
                 <div class="children">
                     <Tree networkMap={node.children} />
@@ -34,6 +34,10 @@
         align-items: center;
         position: relative;
         margin-top: 10px;
+    }
+    .tree-branch{
+        margin-left: 10px;
+        margin-right: 10px;
     }
 
 </style>

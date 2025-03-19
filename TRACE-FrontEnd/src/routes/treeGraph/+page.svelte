@@ -2,25 +2,25 @@
     import Tree from "$lib/components/Tree.svelte";
     let networkMap = [
         {
-            url: "www.google.com",
-            path: "/",
+            ip: "192.168.1.34:8080",
+            path: "www.google.com",
             children: [
                 {
-                    url: "www.google.com/search",
-                    path: "/search",
+                    ip: "192.168.1.34:8080",
+                    path: "www.google.com/search",
                     children: [
                         {
-                            url: "www.google.com/search/search",
-                            path: "/search/search",
+                            ip: "192.168.1.34:8080",
+                            path: "www.google.com/search/search",
                             children: [
                                 {
-                                    url: "www.google.com/search/search/s",
-                                    path: "/search/search/s",
+                                    ip: "192.168.1.34:8080",
+                                    path: "www.google.com/search/search/s",
                                     children:[]
                                 },
                                 {
-                                    url: "www.google.com/search/search/search/s",
-                                    path: "/search/search/search/s",
+                                    ip: "192.168.1.34:8080",
+                                    path: "www.google.com/search/search/search/s",
                                     children: []
                                 }
                             ]
@@ -28,8 +28,8 @@
                     ]
                 },
                 {
-                    url: "www.google.com/gmail",
-                    path: "/search/search/search",
+                    ip: "192.168.1.34:8080",
+                    path: "www.google.com/gmail",
                     children: []
                 }
             ]
@@ -37,5 +37,12 @@
     ];
 
 </script>
-<h1>Tree graph</h1>
+<h1 class="page-header">Tree graph</h1>
 <Tree networkMap={networkMap}></Tree>
+
+<style>
+    .page-header {
+        margin-left: 2.5vw;
+    }
+
+</style>

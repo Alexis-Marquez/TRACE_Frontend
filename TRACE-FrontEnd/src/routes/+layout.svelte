@@ -22,6 +22,9 @@
 </main>
 
 <style>
+    :root  {
+        font-family: 'Poppins', sans-serif;
+    }
     .side-bar {
         position: fixed;
         top: 0;
@@ -31,6 +34,7 @@
         background: #e1e1e1;
         display: flex;
         flex-direction: column;
+        border-radius: 3%;
     }
     .side-bar-button{
         border-radius: 50%;

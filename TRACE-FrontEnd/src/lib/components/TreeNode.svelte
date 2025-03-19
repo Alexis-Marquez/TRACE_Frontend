@@ -1,18 +1,18 @@
 <script>
     let props = $props();
-    let url = props.url || "Unknown URL";  // Handle undefined values
+    let ip = props.ip || "Unknown IP";  // Handle undefined values
     let path = props.path || "Unknown Path";
 </script>
 
 <div class="tree-node {props.root ? 'root' : ''}">
     <div class="tree-node-title">
-        <strong>URL:</strong> {url}
+        {ip}
     </div>
     <div class="dividing-line">
 
     </div>
     <div class="tree-node-content">
-        <strong>Path:</strong> {path}
+        {path}
     </div>
 </div>
 
@@ -20,15 +20,15 @@
     .tree-node {
         display: flex;
         flex-direction: column;
-        font-size: 2vh;
+        font-size: 1.5vh;
         background: white;
         border: 2px solid #006699;
-        border-radius: 8px;
+        border-radius: 10px;
         padding: 10px;
         margin: 10px auto;
         text-align: center;
         height: 10vh;
-        width: 15vw;
+        width: clamp(10vw, 15vw, 20vw);
         box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
         position: relative;
         justify-content: space-around;
