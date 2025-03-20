@@ -28,7 +28,7 @@
         margin: 10px auto;
         text-align: center;
         height: 10vh;
-        width: clamp(10vw, 15vw, 20vw);
+        width: fit-content;
         box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
         position: relative;
         justify-content: space-around;

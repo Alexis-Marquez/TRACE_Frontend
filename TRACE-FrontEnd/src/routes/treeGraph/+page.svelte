@@ -37,12 +37,20 @@
     //         ]
     //     }
     // ];
-    let networkMap = $state()
-    onMount(() => {
-        const params = new URLSearchParams(page.url.search);
-        const urlsParam = params.get("urls");
-        if (urlsParam) {
-            networkMap = JSON.parse(decodeURIComponent(urlsParam));
+
+    let networkMap = [];
+
+    onMount(async () => {
+        try {
+            const response = await fetch("http://127.0.0.1:5000/crawler/data");
+            const data = await response.json();
+            if (data.error) {
+                console.error("Error:", data.error);
+            } else {
+                networkMap = data;
+            }
+        } catch (err) {
+            console.error("Failed to fetch crawler daa:", err);
         }
     });
 </script>

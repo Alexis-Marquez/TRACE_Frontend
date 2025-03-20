@@ -8,37 +8,38 @@
 
         const data = new FormData(event.currentTarget);
 
-        const response = await fetch("./api/sitemap", {
+        const response = await fetch("http://127.0.0.1:5000/crawler", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({url: data.get("Target URL"), max_depth: data.get("Crawl depth")}),
+            body: JSON.stringify({TargetURL: data.get("TargetURL"), CrawlDepth: data.get("CrawlDepth"),
+                PageNumberLimit: data.get("PageNumberLimit"), UserAgent: data.get("UserAgent"), RequestDelay: data.get("RequestDelay")}),
         })
         urls = await response.json();
         crawling = false;
-        await goto(`/treeGraph?urls=${encodeURIComponent(JSON.stringify(urls))}`);
+        await goto(`/treeGraph`);
     }
 </script>
 
 <form class="crawler-config-form" onsubmit={startCrawl}>
     <div class="form-item">
         <label for="Target URL">Target URL</label>
-        <input class="form-field" id="Target URL" type="text" name="Target URL"/>
+        <input class="form-field" id="TargetURL" type="text" name="TargetURL"/>
     </div>
     <div class="form-item">
         <label for="Crawl depth"> Crawl Depth</label>
-        <input class="form-field" id="Crawl depth" type="text" name="Crawl depth"/>
+        <input class="form-field" id="CrawlDepth" type="text" name="CrawlDepth"/>
     </div>
     <div class="form-item">
         <label for="Max number of pages">Limit on Number of Pages</label>
-        <input class="form-field" id="Max number of pages" type="text" name="Max number of pages"/>
+        <input class="form-field" id="PageNumberLimit" type="text" name="PageNumberLimit"/>
     </div>
     <div class="form-item">
         <label for="User agent string">User Agent String</label>
-        <input class="form-field" id="User agent string" type="text" name="User agent string"/>
+        <input class="form-field" id="UserAgent" type="text" name="UserAgent"/>
     </div>
     <div class="form-item">
         <label for="Request delay">Request Delay</label>
-        <input class="form-field" id="Request delay" type="text" name="RequestDelay"/>
+        <input class="form-field" id="RequestDelay" type="text" name="RequestDelay"/>
     </div>
     <button type="submit">Start</button>
 </form>
