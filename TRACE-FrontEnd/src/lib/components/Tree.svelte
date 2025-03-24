@@ -4,14 +4,10 @@
     import Tree from './Tree.svelte';
 
     let props = $props()
-    let localNetworkMap = props.networkMap;
-    let networkMap = $state();
-    networkMap = localNetworkMap;
-    console.log(networkMap)
+    let networkMap = props.networkMap;
 </script>
 
 <div class="network-tree">
-    {#if !networkMap || networkMap.length > 0}
         {#each networkMap as node}
             <div class="tree-branch">
                 <TreeNode ip={node.ip} path={node.path}/>
@@ -28,9 +24,6 @@
                 {/if}
             </div>
         {/each}
-    {:else}
-        <p>Loading...</p>
-    {/if}
 </div>
 
 <style>

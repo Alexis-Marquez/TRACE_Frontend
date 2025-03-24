@@ -4,9 +4,6 @@
 
 <h1 class="page-header">Crawler</h1>
 <div class="page-content">
-<h3 class="page-subtitle">
-    Configuration
-</h3>
     <CrawlerForm></CrawlerForm>
 </div>
 <style>

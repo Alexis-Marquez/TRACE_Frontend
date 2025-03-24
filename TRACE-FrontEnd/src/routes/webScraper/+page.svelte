@@ -3,7 +3,7 @@
     let credentials = []
     onMount(async () => {
         try {
-            const response = await fetch("http://127.0.0.1:5000/webscraper");
+            const response = await fetch("http://127.0.0.1:8000/webscraper");
             const data = await response.json();
             if (data.error) {
                 console.error("Error:", data.error);
