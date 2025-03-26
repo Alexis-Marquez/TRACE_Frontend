@@ -1,7 +1,7 @@
 <script>
     let props = $props();
-    let ip = props.ip || "Unknown IP";
-    let path = props.path || "Unknown Path";
+    let ip = props.ip;
+    let path = props.path;
 </script>
 
 <div class="tree-node {props.root ? 'root' : ''}">

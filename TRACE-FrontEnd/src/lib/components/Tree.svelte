@@ -9,9 +9,10 @@
 
 <div class="network-tree">
         {#each networkMap as node}
+            {console.log(node)}
             <div class="tree-branch">
                 <TreeNode ip={node.ip} path={node.path}/>
-                {#if node.children.length > 0}
+                {#if node.children && node.children.length > 0}
                     <div class="children">
                         <svg class="tree-line">
                             <line x1="50%" y1="0" x2="50%" y2="4%" stroke="black" stroke-width="2" />
@@ -32,6 +33,7 @@
         justify-content: center;
         position: relative;
         width: 100%;
+        margin-left: 10vw;
     }
     .tree-line {
         position: absolute;
