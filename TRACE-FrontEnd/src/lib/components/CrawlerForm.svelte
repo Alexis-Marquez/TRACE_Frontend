@@ -32,6 +32,8 @@
             crawling = false;
         }
     }
+
+    let advancedOptions = $state(false);
 </script>
 
 {#if !crawling}
@@ -39,26 +41,32 @@
     <form class="crawler-config-form" onsubmit={startCrawl}>
         <div class="form-item">
             <label for="TargetURL">Target URL</label>
-            <input class="form-field" id="TargetURL" type="text" name="TargetURL" required />
+            <input class="form-field" id="TargetURL" type="url" name="TargetURL" required />
         </div>
-        <div class="form-item">
+        <div class="form-item {!advancedOptions ? 'hidden': ''}">
             <label for="CrawlDepth">Crawl Depth</label>
-            <input class="form-field" id="CrawlDepth" type="number" name="CrawlDepth" required />
+            <input class="form-field" id="CrawlDepth" type="number" name="CrawlDepth" value="5" required />
         </div>
-        <div class="form-item">
+        <div class="form-item {!advancedOptions ? 'hidden': ''}">
             <label for="PageNumberLimit">Limit on Number of Pages</label>
-            <input class="form-field" id="PageNumberLimit" type="number" name="PageNumberLimit" required />
+            <input class="form-field" id="PageNumberLimit" type="number" name="PageNumberLimit" value="10" required />
         </div>
-        <div class="form-item">
+        <div class="form-item {!advancedOptions ? 'hidden': ''}">
             <label for="UserAgent">User Agent String</label>
-            <input class="form-field" id="UserAgent" type="text" name="UserAgent" required />
+            <select id="UserAgent" name="UserAgent" class="form-field">
+                <option class="option-field" id="UserAgent" value="Mozilla/3.0">Mozilla/3.0</option>
+                <option class="option-field" id="UserAgent" value="AppleWebKit/537.36">AppleWebKit/537.36</option>
+                <option class="option-field" id="UserAgent" value="Chrome/112.0.0.0">Chrome/112.0.0.0</option>
+                <option class="option-field" id="UserAgent" value="Mobile Safari/537.36">Mobile Safari/537.36</option>
+            </select>
         </div>
-        <div class="form-item">
+        <div class="form-item {!advancedOptions ? 'hidden': ''}">
             <label for="RequestDelay">Request Delay</label>
-            <input class="form-field" id="RequestDelay" type="number" name="RequestDelay" required />
+            <input class="form-field" id="RequestDelay" type="number" name="RequestDelay" required value="1"/>
         </div>
         <button type="submit">Start</button>
     </form>
+    <button class="advanced-options-button" onclick={()=>{advancedOptions = !advancedOptions}}> {advancedOptions ? "Hide Advanced Options ⌃" : "Show Advanced Options ⌵"}</button>
 {:else}
     {#if res}
         <h1>Crawling complete</h1>
@@ -86,5 +94,8 @@
         align-content: space-around;
         flex-wrap: wrap;
         margin: 1vh auto;
+    }
+    .hidden{
+        display: none;
     }
 </style>
