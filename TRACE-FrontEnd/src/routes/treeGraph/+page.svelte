@@ -3,6 +3,7 @@
     import {onMount} from "svelte";
     import { page } from "$app/state";
     import {goto} from "$app/navigation";
+    import SiteMapList from "$lib/components/SiteMapList.svelte";
     // let networkMap = [
     //     {
     //         ip: "192.168.1.34:8080",
@@ -39,7 +40,7 @@
     //     }
     // ];
 
-    let networkMap = [];
+    let networkMap = $state([]);
 
     onMount(async () => {
         try {
@@ -58,18 +59,35 @@
     async function generateWordlist() {
         await goto(`/webScraper`);
     }
-
+    let treeMode = $state(true)
 </script>
 
 {#if !networkMap || networkMap.length === 0}
     <h1>Loading...</h1>
 {:else }
-<h1 class="page-header">Tree graph</h1>
-<Tree networkMap={networkMap}></Tree>
-<button onclick={generateWordlist}>Generate wordlist</button>
+    {#if treeMode}
+        <h1 class="page-header">Tree graph</h1>
+        <div class="display-zone">
+        <Tree networkMap={networkMap}></Tree>
+        </div>
+    {:else}
+        <h1 class="page-header"> List View</h1>
+        <div class="display-zone">
+        <SiteMapList networkMap ={networkMap}></SiteMapList>
+        </div>
+    {/if}
+    <button onclick={generateWordlist}>Generate wordlist</button>
+    <button onclick={()=>{treeMode = !treeMode}}>Switch View</button>
 {/if}
 <style>
     .page-header {
-        margin-left: 2.5vw;
+        margin-left: 2vw;
+    }
+    .display-zone{
+        display: flex;
+        justify-content: center;
+        overflow: scroll;
+        width: 100%;
+        height: 80vh;
     }
 </style>
