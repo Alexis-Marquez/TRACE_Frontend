@@ -4,6 +4,7 @@
     import { page } from "$app/state";
     import {goto} from "$app/navigation";
     import SiteMapList from "$lib/components/SiteMapList.svelte";
+    import { fade } from 'svelte/transition';
     // let networkMap = [
     //     {
     //         ip: "192.168.1.34:8080",
@@ -67,12 +68,12 @@
 {:else }
     {#if treeMode}
         <h1 class="page-header">Tree graph</h1>
-        <div class="display-zone">
+        <div class="display-zone" transition:fade>
         <Tree networkMap={networkMap}></Tree>
         </div>
     {:else}
         <h1 class="page-header"> List View</h1>
-        <div class="display-zone">
+        <div class="display-zone" transition:fade>
         <SiteMapList networkMap ={networkMap}></SiteMapList>
         </div>
     {/if}
