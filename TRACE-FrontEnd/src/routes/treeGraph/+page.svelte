@@ -78,29 +78,33 @@
     }
 </script>
 
+<div class="tree-graph">
 {#if !networkMap || networkMap.length === 0}
     <h1>Loading...</h1>
 {:else }
     {#if treeMode}
+
         <h1 class="page-header">Tree graph</h1>
-        <div class="display-zone" transition:fade>
+        <div class="display-zone">
         <Tree networkMap={networkMap} scale={scale}></Tree>
         </div>
     {:else}
         <h1 class="page-header"> List View</h1>
-        <div class="display-zone" transition:fade>
+        <div class="display-zone">
         <SiteMapList networkMap ={networkMap}></SiteMapList>
         </div>
     {/if}
     <button  onclick={isZoomedOut ? resetZoom : zoomOut}>
         {isZoomedOut ? "Reset Zoom" : "Zoom Out"}
     </button>
-    <button onclick={generateWordlist}>Generate wordlist</button>
-    <button onclick={()=>{treeMode = !treeMode}}>Switch View</button>
+    <button onclick={generateWordlist}><b> Wordlist</b></button>
+    <button onclick={()=>{treeMode = !treeMode}}><b>Switch View</b></button>
 {/if}
+</div>
 <style>
     .page-header {
         margin-left: 2vw;
+        margin-top: 0;
     }
     .display-zone{
         display: flex;
@@ -108,5 +112,17 @@
         overflow: scroll;
         width: 100%;
         height: 80vh;
+    }
+    button {
+        background: rgba(74, 166, 176, 0.6);
+        border-radius: 5px;
+        margin: 7px;
+        padding: 1em;
+        border: none;
+        font-size: 0.8em;
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    }
+    button:hover{
+        background: #4aa6b0;
     }
 </style>

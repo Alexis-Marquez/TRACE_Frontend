@@ -9,9 +9,9 @@
         </a>
     </div>
     <div class="side-bar-section mid">
-    <button class="side-bar-button" aria-label="crawler button" type="button">
-        <a class="side-bar-logo-link" href="./crawler" aria-label="crawler button">
-            <img class="side-bar-button-logo" src="./fontawesome-free-6.7.2-desktop/svgs/solid/bug.svg" alt="Crawler logo">
+    <button class="side-bar-button" aria-label="Tools button" type="button">
+        <a class="side-bar-logo-link" href="./crawler" aria-label="tools button">
+            <img class="side-bar-button-logo" src="./fontawesome-free-6.7.2-desktop/svgs/solid/hammer.svg" alt="Tools logo">
         </a>
     </button>
     <button class="side-bar-button" aria-label="network tree button">
@@ -19,11 +19,16 @@
            <img class="side-bar-button-logo" src="./fontawesome-free-6.7.2-desktop/svgs/solid/folder-tree.svg" alt="Network Tree logo">
         </a>
     </button>
-    <button class="side-bar-button" aria-label="wordlist button">
+    <button class="side-bar-button" aria-label="results button">
         <a class="side-bar-logo-link" href="./wordlist">
-            <img class="side-bar-button-logo" src="./fontawesome-free-6.7.2-desktop/svgs/solid/list.svg" alt="Wordlist logo">
+            <img class="side-bar-button-logo" src="./fontawesome-free-6.7.2-desktop/svgs/solid/list-check.svg" alt="results logo">
         </a>
     </button>
+        <button class="side-bar-button" aria-label="AI Credential Generator button">
+            <a class="side-bar-logo-link" href="./wordlist">
+                <img class="side-bar-button-logo" src="./fontawesome-free-6.7.2-desktop/svgs/solid/brain.svg" alt="AI Credential Generator logo">
+            </a>
+        </button>
     </div>
     <div class="side-bar-section bottom">
     <button class="side-bar-button" aria-label="config-button">
@@ -54,8 +59,8 @@
     }
     .side-bar-button{
         border-radius: 50%;
-        width: 7vh;
-        height: 7vh;
+        width: 6vh;
+        height: 6vh;
         background: #cfcfcf;
         border: none;
         padding: 0;
@@ -66,6 +71,7 @@
     .side-bar-button:hover{
         border: #7e7d7d;
         background: #4aa6b0;
+        transform: scale(1.2);
     }
     .side-bar-section{
         display: flex;
