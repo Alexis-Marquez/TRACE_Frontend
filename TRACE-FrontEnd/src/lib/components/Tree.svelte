@@ -5,9 +5,10 @@
 
     let props = $props()
     let networkMap = props.networkMap;
+    let scale = props.scale;
 </script>
 
-<div class="network-tree">
+<div class="network-tree" style:transform="scale({scale});">
         {#each networkMap as node}
             <div class="tree-branch">
                 <TreeNode ip={node.ip} path={node.path}/>

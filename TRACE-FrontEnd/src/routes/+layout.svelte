@@ -10,19 +10,27 @@
     </div>
     <div class="side-bar-section mid">
     <button class="side-bar-button" aria-label="crawler button" type="button">
-        <a class="side-bar-logo-link" href="./crawler">
-        <img class="side-bar-button-logo" src="./Mapping.png" alt="Network tree logo">
+        <a class="side-bar-logo-link" href="./crawler" aria-label="crawler button">
+            <img class="side-bar-button-logo" src="./fontawesome-free-6.7.2-desktop/svgs/solid/bug.svg" alt="Crawler logo">
         </a>
     </button>
     <button class="side-bar-button" aria-label="network tree button">
         <a class="side-bar-logo-link" href="./treeGraph">
-            <img class="side-bar-button-logo" src="./Mapping.png" alt="Network tree logo">
+           <img class="side-bar-button-logo" src="./fontawesome-free-6.7.2-desktop/svgs/solid/folder-tree.svg" alt="Network Tree logo">
         </a>
     </button>
-    <button class="side-bar-button" aria-label="wordlist button"></button>
+    <button class="side-bar-button" aria-label="wordlist button">
+        <a class="side-bar-logo-link" href="./wordlist">
+            <img class="side-bar-button-logo" src="./fontawesome-free-6.7.2-desktop/svgs/solid/list.svg" alt="Wordlist logo">
+        </a>
+    </button>
     </div>
     <div class="side-bar-section bottom">
-    <button class="side-bar-button" aria-label="config-button"></button>
+    <button class="side-bar-button" aria-label="config-button">
+        <a class="side-bar-logo-link" href="./configGraph">
+            <img class="side-bar-button-logo" src="./fontawesome-free-6.7.2-desktop/svgs/solid/gear.svg" alt="Config logo">
+        </a>
+    </button>
     </div>
 </nav>
 <main class="container">
@@ -46,20 +54,18 @@
     }
     .side-bar-button{
         border-radius: 50%;
-        width: 6vh;
-        height: 6vh;
+        width: 7vh;
+        height: 7vh;
         background: #cfcfcf;
         border: none;
         padding: 0;
     }
     .side-bar-button-logo{
-        width: 6vh;
-        height: 6vh;
-        border-radius: inherit;
-        margin: 0;
+        width: 60%;
     }
     .side-bar-button:hover{
         border: #7e7d7d;
+        background: #4aa6b0;
     }
     .side-bar-section{
         display: flex;

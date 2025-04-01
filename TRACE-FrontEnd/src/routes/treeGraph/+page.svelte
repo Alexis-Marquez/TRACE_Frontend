@@ -1,10 +1,9 @@
 <script>
     import Tree from "$lib/components/Tree.svelte";
     import {onMount} from "svelte";
-    import { page } from "$app/state";
     import {goto} from "$app/navigation";
     import SiteMapList from "$lib/components/SiteMapList.svelte";
-    import { fade } from 'svelte/transition';
+    import {fade} from 'svelte/transition';
     // let networkMap = [
     //     {
     //         ip: "192.168.1.34:8080",
@@ -61,6 +60,22 @@
         await goto(`/webScraper`);
     }
     let treeMode = $state(true)
+
+
+    let scale = $state(1);
+    let isZoomedOut = $state(false);
+    function zoomOut() {
+        scale  -= 0.05;
+        console.log(scale)
+        if(scale<=0.5) isZoomedOut = true;
+    }
+
+    function resetZoom() {
+        if(isZoomedOut) {
+            scale = 1;
+            isZoomedOut = false;
+        }
+    }
 </script>
 
 {#if !networkMap || networkMap.length === 0}
@@ -69,7 +84,7 @@
     {#if treeMode}
         <h1 class="page-header">Tree graph</h1>
         <div class="display-zone" transition:fade>
-        <Tree networkMap={networkMap}></Tree>
+        <Tree networkMap={networkMap} scale={scale}></Tree>
         </div>
     {:else}
         <h1 class="page-header"> List View</h1>
@@ -77,6 +92,9 @@
         <SiteMapList networkMap ={networkMap}></SiteMapList>
         </div>
     {/if}
+    <button  onclick={isZoomedOut ? resetZoom : zoomOut}>
+        {isZoomedOut ? "Reset Zoom" : "Zoom Out"}
+    </button>
     <button onclick={generateWordlist}>Generate wordlist</button>
     <button onclick={()=>{treeMode = !treeMode}}>Switch View</button>
 {/if}
