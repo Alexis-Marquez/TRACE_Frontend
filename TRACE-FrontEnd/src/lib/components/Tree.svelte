@@ -4,7 +4,8 @@
     import Tree from './Tree.svelte';
 
     let props = $props()
-    let networkMap = props.networkMap;
+    let networkMap = $state()
+    networkMap = props.networkMap;
     let scale = props.scale;
 </script>
 

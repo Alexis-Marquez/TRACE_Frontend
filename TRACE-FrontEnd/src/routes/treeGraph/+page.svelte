@@ -1,9 +1,11 @@
 <script>
     import Tree from "$lib/components/Tree.svelte";
-    import {onMount} from "svelte";
+    import {onDestroy, onMount} from "svelte";
     import {goto} from "$app/navigation";
     import SiteMapList from "$lib/components/SiteMapList.svelte";
     import {fade} from 'svelte/transition';
+    import {page} from "$app/state";
+
     // let networkMap = [
     //     {
     //         ip: "192.168.1.34:8080",
@@ -41,19 +43,32 @@
     // ];
 
     let networkMap = $state([]);
-
+    let networkMapSize = $state(0)
+    let intervalId
     onMount(async () => {
-        try {
-            const response = await fetch("http://127.0.0.1:8000/crawler/data");
-            const data = await response.json();
-            if (data.error) {
-                console.error("Error:", data.error);
-            } else {
-                networkMap = data;
-            }
-        } catch (err) {
-            console.error("Failed to fetch crawler data:", err);
-        }
+        intervalId= setInterval(async () => {
+                try {
+                    const response = await fetch("http://127.0.0.1:8000/crawler/data");
+                    const data = await response.json();
+                    if (data.error) {
+                        console.error("Error:", data.error);
+                    } else {
+                        if(response.status === 200) {
+                            networkMap = []
+                            networkMap = data;
+                            networkMapSize = countNodes(networkMap);
+                            if (page.url.searchParams.get('pageLimit')) {
+                                if (networkMapSize >= parseInt(page.url.searchParams.get('pageLimit').toString())) {
+                                    clearInterval(intervalId);
+                                    console.log("Fetching stopped, networkMap has reached the desired length.");
+                                }
+                            }
+                        }
+                    }
+                } catch (err) {
+                    console.error("Failed to fetch crawler data:", err);
+                }
+            }, (page.url.searchParams.get('delay')*1500))
     });
 
     async function generateWordlist() {
@@ -76,22 +91,50 @@
             isZoomedOut = false;
         }
     }
+
+    function countNodes(networkMap) {
+        let count = 0;
+
+        function traverse(nodes) {
+            for (const node of nodes) {
+                count++;
+                if (node.children && node.children.length > 0) {
+                    traverse(node.children);
+                }
+            }
+        }
+
+        traverse(networkMap);
+        return count;
+    }
+
+
+    onDestroy(() => {
+        clearInterval(intervalId);
+    });
 </script>
 
 <div class="tree-graph">
-{#if !networkMap || networkMap.length === 0}
-    <h1>Loading...</h1>
-{:else }
     {#if treeMode}
 
         <h1 class="page-header">Tree graph</h1>
         <div class="display-zone">
+            {#if !networkMap || networkMap.length === 0}
+                <h1>Loading...</h1>
+                {:else}
+                {#key networkMapSize}
         <Tree networkMap={networkMap} scale={scale}></Tree>
+                    {/key}
+                {/if}
         </div>
     {:else}
         <h1 class="page-header"> List View</h1>
         <div class="display-zone">
+            {#if !networkMap || networkMap.length === 0}
+                <h1>Loading...</h1>
+                {:else}
         <SiteMapList networkMap ={networkMap}></SiteMapList>
+                {/if}
         </div>
     {/if}
     <button  onclick={isZoomedOut ? resetZoom : zoomOut}>
@@ -99,7 +142,6 @@
     </button>
     <button onclick={generateWordlist}><b> Wordlist</b></button>
     <button onclick={()=>{treeMode = !treeMode}}><b>Switch View</b></button>
-{/if}
 </div>
 <style>
     .page-header {

@@ -27,6 +27,7 @@
                 throw new Error(`Server error: ${response.status}`);
             }
             res = await response.json();
+            await goto(`/treeGraph?pageLimit=${data.get("PageNumberLimit")}&delay=${data.get("RequestDelay")}`);
         } catch (error) {
             console.error("Error starting crawler:", error);
             crawling = false;
