@@ -5,6 +5,7 @@
     import SiteMapList from "$lib/components/SiteMapList.svelte";
     import {fade} from 'svelte/transition';
     import {page} from "$app/state";
+    import LoadingSpinner from "$lib/components/LoadingSpinner.svelte";
 
     // let networkMap = [
     //     {
@@ -45,6 +46,7 @@
     let networkMap = $state([]);
     let networkMapSize = $state(0)
     let intervalId
+    let noContentCount = 0
     onMount(async () => {
         intervalId= setInterval(async () => {
                 try {
@@ -52,8 +54,7 @@
                     const data = await response.json();
                     if (data.error) {
                         console.error("Error:", data.error);
-                    } else {
-                        if(response.status === 200) {
+                    } else if(response.status === 200) {
                             networkMap = []
                             networkMap = data;
                             networkMapSize = countNodes(networkMap);
@@ -64,7 +65,13 @@
                                 }
                             }
                         }
-                    }
+                        else if(response.status === 400) {
+                            noContentCount ++
+                        }
+                        if(noContentCount >= 5){
+                            clearInterval(intervalId)
+                            console.log("Fetching stopped, no content was found.");
+                        }
                 } catch (err) {
                     console.error("Failed to fetch crawler data:", err);
                 }
@@ -120,7 +127,7 @@
         <h1 class="page-header">Tree graph</h1>
         <div class="display-zone">
             {#if !networkMap || networkMap.length === 0}
-                <h1>Loading...</h1>
+                <img src="/fontawesome-free-6.7.2-desktop/svgs/solid/spinner.svg" alt="Loading..." aria-label="Loading Spinner">
                 {:else}
                 {#key networkMapSize}
         <Tree networkMap={networkMap} scale={scale}></Tree>
@@ -131,8 +138,8 @@
         <h1 class="page-header"> List View</h1>
         <div class="display-zone">
             {#if !networkMap || networkMap.length === 0}
-                <h1>Loading...</h1>
-                {:else}
+                <LoadingSpinner></LoadingSpinner>
+            {:else}
         <SiteMapList networkMap ={networkMap}></SiteMapList>
                 {/if}
         </div>
