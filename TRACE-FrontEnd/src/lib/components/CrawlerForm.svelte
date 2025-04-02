@@ -43,7 +43,7 @@
 
 {#if !crawling}
 	<div class="page-wrapper">
-		<ToolStatusHeader></ToolStatusHeader>
+		<ToolStatusHeader active="Configuration" title="Configuration"></ToolStatusHeader>
 
 		<div class="crawler-container">
 			<form class="crawler-form" on:submit={startCrawl}>
