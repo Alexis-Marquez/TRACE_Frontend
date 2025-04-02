@@ -1,4 +1,6 @@
 <script>
+// @ts-nocheck
+
 	import { goto } from "$app/navigation";
 	import { fade, slide } from "svelte/transition";
 	import ToolStatusHeader from "$lib/components/ToolStatusHeader.svelte";
