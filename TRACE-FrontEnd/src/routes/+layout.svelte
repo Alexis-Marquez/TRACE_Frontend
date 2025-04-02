@@ -10,7 +10,7 @@
     </div>
     <div class="side-bar-section mid">
     <button class="side-bar-button" aria-label="Tools button" type="button">
-        <a class="side-bar-logo-link" href="./crawler" aria-label="tools button">
+        <a class="side-bar-logo-link" href="./tools" aria-label="tools button">
             <img class="side-bar-button-logo" src="./fontawesome-free-6.7.2-desktop/svgs/solid/hammer.svg" alt="Tools logo">
         </a>
     </button>

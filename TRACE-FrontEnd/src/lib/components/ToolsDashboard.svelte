@@ -1,5 +1,7 @@
 <script>
 	// Default tool list for inactive project
+	import {goto} from "$app/navigation";
+
 	let tools = [
 		{
 			name: "HTTP Tester",
@@ -26,7 +28,8 @@
 			color: "#ccc",
 			tooltip: "Tries random values for fuzzing parameters",
 			action: "Set Up",
-			enabled: false
+			enabled: true,
+			callback: ()=>{goto("./fuzzer")}
 		},
 		{
 			name: "Brute Force Tester",
@@ -53,7 +56,8 @@
 			color: "#ccc",
 			tooltip: "Scans the URLs",
 			action: "Set Up",
-			enabled: false
+			enabled: true,
+			callback: ()=>{goto("./crawler")}
 		}
 	];
 </script>
@@ -79,9 +83,11 @@
 
 			<div class="tool-actions">
 				<div class="tooltip-wrapper">
-					<button class="info-btn" title={tool.tooltip}>Info</button>
+					<button class="info-btn" title={tool.tooltip}>
+						<img class="info-logo" src="./fontawesome-free-6.7.2-desktop/svgs/regular/circle-question.svg" alt="Info">
+					</button>
 				</div>
-				<button class="action-btn" disabled={!tool.enabled}>{tool.action}</button>
+				<button class="action-btn" disabled={!tool.enabled} onclick={tool.callback}>{tool.action}</button>
 			</div>
 		</div>
 	{/each}
@@ -102,6 +108,7 @@
 		flex-direction: column;
 		gap: 1.5rem;
 		align-items: center;
+		width: 60%;
 	}
 
 	.tool-row {
@@ -150,12 +157,16 @@
 	}
 
 	.info-btn {
-		background: #ffcccc;
 		border: none;
-		padding: 0.5rem 1rem;
-		border-radius: 6px;
+		border-radius: 50%;
 		cursor: pointer;
 		font-weight: bold;
+		height: 4vh;
+	}
+
+	.info-logo{
+		height: 4vh
+
 	}
 
 	.action-btn {
