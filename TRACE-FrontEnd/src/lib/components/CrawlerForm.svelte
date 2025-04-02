@@ -33,7 +33,7 @@
 			if (!response.ok) throw new Error(`Server error: ${response.status}`);
 
 			res = await response.json();
-			await goto(`/treeGraph?pageLimit=${pageNumberLimit}&delay=${delay}`);
+			await goto(`/crawler/run?pageLimit=${pageNumberLimit}&delay=${delay}`);
 		} catch (error) {
 			console.error("Error starting crawler:", error);
 			crawling = false;
@@ -43,7 +43,7 @@
 
 {#if !crawling}
 	<div class="page-wrapper">
-		<ToolStatusHeader active="Configuration" title="Configuration"></ToolStatusHeader>
+		<ToolStatusHeader active={["Configuration"]} title="Configuration"></ToolStatusHeader>
 
 		<div class="crawler-container">
 			<form class="crawler-form" on:submit={startCrawl}>

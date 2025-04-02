@@ -1,24 +1,35 @@
 <script>
     let props = $props()
-    let active = props.active
+    let activeStep = props.active
     let title = props.title
 </script>
 
 <div class="form-header">
     <h3>{title}</h3>
     <div class="stepper">
-        <div class="step {active==='Configuration' ? 'active' : ''}">
-            <div class="circle"></div>
+        <div class="step {activeStep.includes('Configuration') ? 'active' : ''}">
+            <div class="circle">{#if activeStep.includes('Configuration')}
+                <img class="step-check" src="/fontawesome-free-6.7.2-desktop/svgs/regular/circle-check.svg" alt="Check circle" />
+            {/if}
+            </div>
             <span>Configuration</span>
         </div>
         <div class="line"></div>
-        <div class="step {active==='Running' ? 'active' : ''}">
-            <div class="circle"></div>
+        <div class="step {activeStep.includes('Running') ? 'active' : ''}">
+            <div class="circle">
+                {#if activeStep.includes('Running')}
+                    <img class="step-check" src="/fontawesome-free-6.7.2-desktop/svgs/regular/circle-check.svg" alt="Check circle" />
+                {/if}
+            </div>
             <span>Running</span>
         </div>
         <div class="line"></div>
-        <div class="step {active==='Results' ? 'active' : ''}">
-            <div class="circle"></div>
+        <div class="step {activeStep.includes('Results') ? 'active' : ''}">
+            <div class="circle">
+                {#if activeStep.includes('Results')}
+                    <img class="step-check" src="/fontawesome-free-6.7.2-desktop/svgs/regular/circle-check.svg" alt="Check circle" />
+                {/if}
+            </div>
             <span>Results</span>
         </div>
     </div>
@@ -30,7 +41,8 @@
         justify-content: space-between;
         width: 100%;
         max-width: 700px;
-        margin-bottom: 1rem;
+        margin-bottom: 0.5rem;
+        max-height: 100vh;
     }
 
     .stepper {
@@ -58,6 +70,7 @@
         border: 2px solid #ccc;
         border-radius: 50%;
         background: white;
+        display: flex;
     }
 
     .step.active .circle {
@@ -73,4 +86,8 @@
         align-self: center;
     }
 
+    .step-check{
+        width: 12px;
+        height: 12px;
+    }
 </style>

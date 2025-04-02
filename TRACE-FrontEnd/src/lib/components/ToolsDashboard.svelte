@@ -106,7 +106,7 @@
 	.tools-list {
 		display: flex;
 		flex-direction: column;
-		gap: 1.5rem;
+		gap: 1rem;
 		align-items: center;
 		width: 60%;
 	}
@@ -116,7 +116,7 @@
 		align-items: center;
 		justify-content: space-between;
 		width: 85%;
-		padding: 1rem;
+		padding: 0.7rem;
 		border-radius: 12px;
 		background: #f2f2f2;
 	}

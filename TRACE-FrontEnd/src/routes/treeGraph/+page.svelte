@@ -6,6 +6,7 @@
     import {fade} from 'svelte/transition';
     import {page} from "$app/state";
     import LoadingSpinner from "$lib/components/LoadingSpinner.svelte";
+    import ToolButton from "$lib/components/ToolButton.svelte";
 
     // let networkMap = [
     //     {
@@ -152,11 +153,10 @@
                 {/if}
         </div>
     {/if}
-    <button  onclick={isZoomedOut ? resetZoom : zoomOut}>
-        {isZoomedOut ? "Reset Zoom" : "Zoom Out"}
-    </button>
-    <button onclick={generateWordlist}><b> Wordlist</b></button>
-    <button onclick={()=>{treeMode = !treeMode}}><b>Switch View</b></button>
+    <ToolButton callback={()=>{isZoomedOut ? resetZoom : zoomOut}} content={isZoomedOut ? "Reset Zoom" : "Zoom Out"}>
+    </ToolButton>
+    <ToolButton callback={generateWordlist} content="<b> Wordlist</b>"></ToolButton>
+    <ToolButton callback={()=>{treeMode = !treeMode}} content="<b>Switch View</b>"></ToolButton>
 </div>
 <style>
     .page-header {
@@ -169,17 +169,10 @@
         overflow: scroll;
         width: 100%;
         height: 80vh;
+        scrollbar-width: none;  /* Firefox */
+        -ms-overflow-style: none;
     }
-    button {
-        background: rgba(74, 166, 176, 0.6);
-        border-radius: 5px;
-        margin: 7px;
-        padding: 1em;
-        border: none;
-        font-size: 0.8em;
-        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-    }
-    button:hover{
-        background: #4aa6b0;
+    .display-zone::-webkit-scrollbar {
+        display: none;  /* Chrome, Safari */
     }
 </style>
