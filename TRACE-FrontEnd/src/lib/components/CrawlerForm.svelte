@@ -1,6 +1,6 @@
 <script>
 	import { goto } from "$app/navigation";
-
+	import { fade, slide } from "svelte/transition";
 	let crawling = false;
 	// @ts-ignore
 	/**
@@ -68,8 +68,7 @@
 					<label for="TargetURL">Target URL *</label>
 					<input type="url" id="TargetURL" name="TargetURL" required />
 				</div>
-
-				{#if advancedOptions}
+					<div class="advanced-options {!advancedOptions ? 'hidden': ''}" transition:slide >
 					<div class="form-group">
 						<label for="CrawlDepth">Crawl Depth</label>
 						<input type="number" id="CrawlDepth" name="CrawlDepth" value="2" />
@@ -94,7 +93,7 @@
 						<label for="RequestDelay">Request Delay (ms)</label>
 						<input type="number" id="RequestDelay" name="RequestDelay" value="1000" />
 					</div>
-				{/if}
+					</div>
 
 				<button type="submit" class="start-btn">Start</button>
 			</form>
@@ -119,7 +118,7 @@
 	}
 
 	.page-wrapper {
-		width: 100%;
+		width: 90%;
 		padding: 2rem;
 		display: flex;
 		flex-direction: column;
@@ -150,7 +149,7 @@
 	}
 
 	.step.active {
-		color: #0077cc;
+		color: #4aa6b0;
 		font-weight: bold;
 	}
 
@@ -163,8 +162,8 @@
 	}
 
 	.step.active .circle {
-		border-color: #0077cc;
-		background: #0077cc;
+		border-color: #4aa6b0;
+		background: #4aa6b0;
 	}
 
 	.line {
@@ -195,6 +194,10 @@
 		flex-direction: column;
 	}
 
+	.advanced-options{
+		animation: appear 0.5s;
+	}
+
 	label {
 		font-size: 0.9rem;
 		margin-bottom: 0.25rem;
@@ -210,7 +213,7 @@
 	}
 
 	.start-btn {
-		background-color: #cce5ff;
+		background-color: rgba(74, 166, 176, 0.6);
 		color: #000;
 		border: none;
 		border-radius: 6px;
@@ -218,15 +221,44 @@
 		font-size: 1rem;
 		cursor: pointer;
 		width: 100%;
+		transition: ease-in-out .25s;
+	}
+
+	.start-btn:hover{
+		background: #4aa6b0;
+		transform: scale(1.05);
 	}
 
 	.toggle-btn {
 		margin-top: 1rem;
 		background: none;
 		border: none;
-		color: #0077cc;
+		color: #4aa6b0;
 		cursor: pointer;
 		font-weight: bold;
+	}
+	.hidden{
+		display: none;
+		animation: vanish 0.5s;
+	}
+
+	@keyframes appear {
+		from{
+			transform: translateY(-10%);
+		}
+		to{
+			transform: translateY(0);
+		}
+	}
+	@keyframes vanish {
+		from{
+			display: block;
+			transform: translateY(-10%);
+		}
+		to{
+			display: none;
+			transform: translateY(0);
+		}
 	}
 </style>
 
