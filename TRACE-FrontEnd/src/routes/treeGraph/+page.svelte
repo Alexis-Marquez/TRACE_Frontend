@@ -54,9 +54,8 @@
                     const data = await response.json();
                     if (data.error) {
                         console.error("Error:", data.error);
-                    } else if(response.status === 200) {
-                            networkMap = []
-                            networkMap = data;
+                    } else if(response.status === 206) {
+                            networkMap = data.data;
                             networkMapSize = countNodes(networkMap);
                             if (page.url.searchParams.get('pageLimit')) {
                                 if (networkMapSize >= parseInt(page.url.searchParams.get('pageLimit').toString())) {
@@ -71,6 +70,11 @@
                         if(noContentCount >= 5){
                             clearInterval(intervalId)
                             console.log("Fetching stopped, no content was found.");
+                        }
+                        if(response.status === 200){
+                            networkMap = data;
+                            networkMapSize = countNodes(networkMap);
+                            clearInterval(intervalId)
                         }
                 } catch (err) {
                     console.error("Failed to fetch crawler data:", err);
@@ -127,7 +131,7 @@
         <h1 class="page-header">Tree graph</h1>
         <div class="display-zone">
             {#if !networkMap || networkMap.length === 0}
-                <img src="/fontawesome-free-6.7.2-desktop/svgs/solid/spinner.svg" alt="Loading..." aria-label="Loading Spinner">
+                <LoadingSpinner></LoadingSpinner>
                 {:else}
                 {#key networkMapSize}
         <Tree networkMap={networkMap} scale={scale}></Tree>
