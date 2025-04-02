@@ -1,17 +1,23 @@
+<script>
+    let props = $props()
+    let active = props.active
+    let title = props.title
+</script>
+
 <div class="form-header">
-    <h3>Configuration</h3>
+    <h3>{title}</h3>
     <div class="stepper">
-        <div class="step active">
+        <div class="step {active==='Configuration' ? 'active' : ''}">
             <div class="circle"></div>
             <span>Configuration</span>
         </div>
         <div class="line"></div>
-        <div class="step">
+        <div class="step {active==='Running' ? 'active' : ''}">
             <div class="circle"></div>
             <span>Running</span>
         </div>
         <div class="line"></div>
-        <div class="step">
+        <div class="step {active==='Results' ? 'active' : ''}">
             <div class="circle"></div>
             <span>Results</span>
         </div>

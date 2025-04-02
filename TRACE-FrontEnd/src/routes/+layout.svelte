@@ -4,36 +4,36 @@
 
 <nav class="side-bar">
     <div class="side-bar-section top">
-        <a class="side-bar-logo-link" href="./" aria-label="Home link">
-            <img class="side-bar-logo" src="./favicon.png" alt="TRACE logo">
+        <a class="side-bar-logo-link" href="/" aria-label="Home link">
+            <img class="side-bar-logo" src="/favicon.png" alt="TRACE logo">
         </a>
     </div>
     <div class="side-bar-section mid">
     <button class="side-bar-button" aria-label="Tools button" type="button">
-        <a class="side-bar-logo-link" href="./tools" aria-label="tools button">
-            <img class="side-bar-button-logo" src="./fontawesome-free-6.7.2-desktop/svgs/solid/hammer.svg" alt="Tools logo">
+        <a class="side-bar-logo-link" href="/tools" aria-label="tools button">
+            <img class="side-bar-button-logo" src="/fontawesome-free-6.7.2-desktop/svgs/solid/hammer.svg" alt="Tools logo">
         </a>
     </button>
     <button class="side-bar-button" aria-label="network tree button">
-        <a class="side-bar-logo-link" href="./treeGraph">
-           <img class="side-bar-button-logo" src="./fontawesome-free-6.7.2-desktop/svgs/solid/folder-tree.svg" alt="Network Tree logo">
+        <a class="side-bar-logo-link" href="/treeGraph">
+           <img class="side-bar-button-logo" src="/fontawesome-free-6.7.2-desktop/svgs/solid/folder-tree.svg" alt="Network Tree logo">
         </a>
     </button>
     <button class="side-bar-button" aria-label="results button">
-        <a class="side-bar-logo-link" href="./wordlist">
-            <img class="side-bar-button-logo" src="./fontawesome-free-6.7.2-desktop/svgs/solid/list-check.svg" alt="results logo">
+        <a class="side-bar-logo-link" href="/wordlist">
+            <img class="side-bar-button-logo" src="/fontawesome-free-6.7.2-desktop/svgs/solid/list-check.svg" alt="results logo">
         </a>
     </button>
         <button class="side-bar-button" aria-label="AI Credential Generator button">
-            <a class="side-bar-logo-link" href="./wordlist">
-                <img class="side-bar-button-logo" src="./fontawesome-free-6.7.2-desktop/svgs/solid/brain.svg" alt="AI Credential Generator logo">
+            <a class="side-bar-logo-link" href="/wordlist">
+                <img class="side-bar-button-logo" src="/fontawesome-free-6.7.2-desktop/svgs/solid/brain.svg" alt="AI Credential Generator logo">
             </a>
         </button>
     </div>
     <div class="side-bar-section bottom">
     <button class="side-bar-button" aria-label="config-button">
-        <a class="side-bar-logo-link" href="./configGraph">
-            <img class="side-bar-button-logo" src="./fontawesome-free-6.7.2-desktop/svgs/solid/gear.svg" alt="Config logo">
+        <a class="side-bar-logo-link" href="/configGraph">
+            <img class="side-bar-button-logo" src="/fontawesome-free-6.7.2-desktop/svgs/solid/gear.svg" alt="Config logo">
         </a>
     </button>
     </div>
