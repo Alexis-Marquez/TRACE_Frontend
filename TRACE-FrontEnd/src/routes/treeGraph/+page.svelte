@@ -47,7 +47,7 @@
     let networkMapSize = $state(0)
     let intervalId
     let noContentCount = 0
-    let delay = 1
+    let delay = 1000
     if (page.url.searchParams.get('delay')){
         delay = page.url.searchParams.get('delay')
     }
@@ -83,7 +83,7 @@
                 } catch (err) {
                     console.error("Failed to fetch crawler data:", err);
                 }
-            }, (delay*1500))
+            }, (delay*1.5))
     });
 
     async function generateWordlist() {

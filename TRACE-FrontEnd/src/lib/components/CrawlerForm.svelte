@@ -2,14 +2,10 @@
 	import { goto } from "$app/navigation";
 	import { fade, slide } from "svelte/transition";
 	let crawling = false;
-	// @ts-ignore
-	/**
-     * @type {null}
-     */
+
 	let res = null;
 	let advancedOptions = false;
 
-	// @ts-ignore
 	async function startCrawl(event) {
 		event.preventDefault();
 		crawling = true;
@@ -17,22 +13,26 @@
 		const data = new FormData(event.currentTarget);
 
 		try {
+			let depth = data.get("CrawlDepth") ? data.get("CrawlDepth") : 2
+			let pageNumberLimit = data.get("PageNumberLimit") ? data.get("PageNumberLimit") : 50
+			let userAgent = data.get("UserAgent") ? data.get('UserAgent') : "Mozilla/3.0"
+			let delay = data.get("RequestDelay") ? data.get("RequestDelay") : 1000
 			const response = await fetch("http://127.0.0.1:8000/crawler", {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({
 					TargetURL: data.get("TargetURL"),
-					CrawlDepth: data.get("CrawlDepth"),
-					PageNumberLimit: data.get("PageNumberLimit"),
-					UserAgent: data.get("UserAgent"),
-					RequestDelay: data.get("RequestDelay"),
+					CrawlDepth:  depth,
+					PageNumberLimit: pageNumberLimit,
+					UserAgent: userAgent,
+					RequestDelay: delay,
 				}),
 			});
 
 			if (!response.ok) throw new Error(`Server error: ${response.status}`);
 
 			res = await response.json();
-			await goto(`/treeGraph?pageLimit=${data.get("PageNumberLimit")}&delay=${data.get("RequestDelay")}`);
+			await goto(`/treeGraph?pageLimit=${pageNumberLimit}&delay=${delay}`);
 		} catch (error) {
 			console.error("Error starting crawler:", error);
 			crawling = false;
@@ -68,7 +68,8 @@
 					<label for="TargetURL">Target URL *</label>
 					<input type="url" id="TargetURL" name="TargetURL" required />
 				</div>
-					<div class="advanced-options {!advancedOptions ? 'hidden': ''}" transition:slide >
+				{#if advancedOptions}
+					<div class="advanced-options" transition:slide >
 					<div class="form-group">
 						<label for="CrawlDepth">Crawl Depth</label>
 						<input type="number" id="CrawlDepth" name="CrawlDepth" value="2" />
@@ -94,6 +95,7 @@
 						<input type="number" id="RequestDelay" name="RequestDelay" value="1000" />
 					</div>
 					</div>
+					{/if}
 
 				<button type="submit" class="start-btn">Start</button>
 			</form>
@@ -194,10 +196,6 @@
 		flex-direction: column;
 	}
 
-	.advanced-options{
-		animation: appear 0.5s;
-	}
-
 	label {
 		font-size: 0.9rem;
 		margin-bottom: 0.25rem;
@@ -236,29 +234,6 @@
 		color: #4aa6b0;
 		cursor: pointer;
 		font-weight: bold;
-	}
-	.hidden{
-		display: none;
-		animation: vanish 0.5s;
-	}
-
-	@keyframes appear {
-		from{
-			transform: translateY(-10%);
-		}
-		to{
-			transform: translateY(0);
-		}
-	}
-	@keyframes vanish {
-		from{
-			display: block;
-			transform: translateY(-10%);
-		}
-		to{
-			display: none;
-			transform: translateY(0);
-		}
 	}
 </style>
 
