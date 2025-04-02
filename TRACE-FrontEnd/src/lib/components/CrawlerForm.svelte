@@ -1,15 +1,11 @@
 <script>
 	import { goto } from "$app/navigation";
-
+	import { fade, slide } from "svelte/transition";
 	let crawling = false;
-	// @ts-ignore
-	/**
-     * @type {null}
-     */
+
 	let res = null;
 	let advancedOptions = false;
 
-	// @ts-ignore
 	async function startCrawl(event) {
 		event.preventDefault();
 		crawling = true;
@@ -17,22 +13,26 @@
 		const data = new FormData(event.currentTarget);
 
 		try {
+			let depth = data.get("CrawlDepth") ? data.get("CrawlDepth") : 2
+			let pageNumberLimit = data.get("PageNumberLimit") ? data.get("PageNumberLimit") : 50
+			let userAgent = data.get("UserAgent") ? data.get('UserAgent') : "Mozilla/3.0"
+			let delay = data.get("RequestDelay") ? data.get("RequestDelay") : 1000
 			const response = await fetch("http://127.0.0.1:8000/crawler", {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({
 					TargetURL: data.get("TargetURL"),
-					CrawlDepth: data.get("CrawlDepth"),
-					PageNumberLimit: data.get("PageNumberLimit"),
-					UserAgent: data.get("UserAgent"),
-					RequestDelay: data.get("RequestDelay"),
+					CrawlDepth:  depth,
+					PageNumberLimit: pageNumberLimit,
+					UserAgent: userAgent,
+					RequestDelay: delay,
 				}),
 			});
 
 			if (!response.ok) throw new Error(`Server error: ${response.status}`);
 
 			res = await response.json();
-			await goto(`/treeGraph?pageLimit=${data.get("PageNumberLimit")}&delay=${data.get("RequestDelay")}`);
+			await goto(`/treeGraph?pageLimit=${pageNumberLimit}&delay=${delay}`);
 		} catch (error) {
 			console.error("Error starting crawler:", error);
 			crawling = false;
@@ -68,8 +68,8 @@
 					<label for="TargetURL">Target URL *</label>
 					<input type="url" id="TargetURL" name="TargetURL" required />
 				</div>
-
 				{#if advancedOptions}
+					<div class="advanced-options" transition:slide >
 					<div class="form-group">
 						<label for="CrawlDepth">Crawl Depth</label>
 						<input type="number" id="CrawlDepth" name="CrawlDepth" value="2" />
@@ -94,7 +94,8 @@
 						<label for="RequestDelay">Request Delay (ms)</label>
 						<input type="number" id="RequestDelay" name="RequestDelay" value="1000" />
 					</div>
-				{/if}
+					</div>
+					{/if}
 
 				<button type="submit" class="start-btn">Start</button>
 			</form>
@@ -119,7 +120,7 @@
 	}
 
 	.page-wrapper {
-		width: 100%;
+		width: 90%;
 		padding: 2rem;
 		display: flex;
 		flex-direction: column;
@@ -150,7 +151,7 @@
 	}
 
 	.step.active {
-		color: #0077cc;
+		color: #4aa6b0;
 		font-weight: bold;
 	}
 
@@ -163,8 +164,8 @@
 	}
 
 	.step.active .circle {
-		border-color: #0077cc;
-		background: #0077cc;
+		border-color: #4aa6b0;
+		background: #4aa6b0;
 	}
 
 	.line {
@@ -210,7 +211,7 @@
 	}
 
 	.start-btn {
-		background-color: #cce5ff;
+		background-color: rgba(74, 166, 176, 0.6);
 		color: #000;
 		border: none;
 		border-radius: 6px;
@@ -218,13 +219,19 @@
 		font-size: 1rem;
 		cursor: pointer;
 		width: 100%;
+		transition: ease-in-out .25s;
+	}
+
+	.start-btn:hover{
+		background: #4aa6b0;
+		transform: scale(1.05);
 	}
 
 	.toggle-btn {
 		margin-top: 1rem;
 		background: none;
 		border: none;
-		color: #0077cc;
+		color: #4aa6b0;
 		cursor: pointer;
 		font-weight: bold;
 	}
