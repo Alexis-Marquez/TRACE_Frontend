@@ -5,20 +5,27 @@
     import {page} from "$app/state";
     import {onDestroy, onMount} from "svelte";
     import {goto} from "$app/navigation";
+    import ProgressBar from "$lib/components/ProgressBar.svelte";
 
     let networkMap = $state([]);
     let networkMapSize = $state(0)
     let intervalId
     let noContentCount = 0
     let delay = 1000
+    let currTime = $state(0)
+    let requestCount = $state(0)
+    let reqSec = $state(0)
     if (page.url.searchParams.get('delay')){
         delay = page.url.searchParams.get('delay')
     }
     onMount(async () => {
+        let startTime = performance.now()
+
         intervalId= setInterval(async () => {
             try {
                 const response = await fetch("http://127.0.0.1:8000/crawler/data");
                 const data = await response.json();
+                currTime = performance.now() - startTime;
                 if (data.error) {
                     console.error("Error:", data.error);
                 } else if(response.status === 206) {
@@ -27,6 +34,7 @@
                     if (page.url.searchParams.get('pageLimit')) {
                         if (networkMapSize >= parseInt(page.url.searchParams.get('pageLimit').toString())) {
                             clearInterval(intervalId);
+                            done = true
                             console.log("Fetching stopped, networkMap has reached the desired length.");
                         }
                     }
@@ -36,40 +44,23 @@
                 }
                 if(noContentCount >= 5){
                     clearInterval(intervalId)
+                    done = true
                     console.log("Fetching stopped, no content was found.");
                 }
                 if(response.status === 200){
                     networkMap = data;
                     networkMapSize = countNodes(networkMap);
+                    done = true
+
                     clearInterval(intervalId)
                 }
+                requestCount = networkMapSize
+                reqSec = currTime/requestCount/1000
             } catch (err) {
                 console.error("Failed to fetch crawler data:", err);
             }
         }, (delay*1.5))
     });
-
-    async function generateWordlist() {
-        await goto(`/webScraper`);
-    }
-    let treeMode = $state(true)
-
-
-    let scale = $state(1);
-    let isZoomedOut = $state(false);
-    function zoomOut() {
-        scale  -= 0.05;
-        console.log(scale)
-        if(scale<=0.5) isZoomedOut = true;
-    }
-
-    function resetZoom() {
-        if(isZoomedOut) {
-            scale = 1;
-            isZoomedOut = false;
-        }
-    }
-
     function countNodes(networkMap) {
         let count = 0;
 
@@ -90,34 +81,40 @@
     onDestroy(() => {
         clearInterval(intervalId);
     });
+    let done = $state(false);
 </script>
 
 
 
 <h1 class="page-header">Crawler</h1>
 <div class="page-wrapper">
-    <ToolStatusHeader active={["Configuration", "Running"]} title="Running"></ToolStatusHeader>
+    {#key networkMapSize}
+    <ProgressBar currentCount={networkMapSize}></ProgressBar>
+        {/key}
+    {#key done}
+    <ToolStatusHeader active={["Configuration", "Running",...(done ? ["Results"] : [])]} title="Running"></ToolStatusHeader>
+        {/key}
     <div class="metrics">
         <div class="metric">
             <div class="metric-title">Running Time</div>
-            <div class="metric-value">143.29</div>
+            <div class="metric-value">{currTime.toFixed(2)} ms</div>
         </div>
         <div class="metric">
             <div class="metric-title">Processed Requests</div>
-            <div class="metric-value">143.29</div>
+            <div class="metric-value">{requestCount}</div>
         </div>
         <div class="metric">
             <div class="metric-title">Filtered Requests</div>
-            <div class="metric-value">143.29</div>
+            <div class="metric-value">0</div>
         </div>
         <div class="metric">
             <div class="metric-title">Requests/sec</div>
-            <div class="metric-value">143.29</div>
+            <div class="metric-value">{reqSec.toFixed(2)}</div>
         </div>
     </div>
     <div class="table-display-area">
         {#key networkMapSize}
-    <RunningResultsTable networkMap = {networkMap}></RunningResultsTable>
+    <RunningResultsTable networkMap={networkMap} currSize={networkMapSize}></RunningResultsTable>
             {/key}
     </div>
 </div>
@@ -144,6 +141,7 @@
         overflow: scroll;
         scrollbar-width: none;  /* Firefox */
         -ms-overflow-style: none;
+        max-height: 50vh;
     }
     .table-display-area::-webkit-scrollbar {
         display: none;  /* Chrome, Safari */

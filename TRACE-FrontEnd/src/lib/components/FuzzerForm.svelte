@@ -67,7 +67,7 @@
 	}
 </script>
 
-<ToolStatusHeader />
+<ToolStatusHeader active={["Configuration"]}/>
 
 <form class="fuzzing-form" on:submit|preventDefault={startFuzzing}>
 	<input

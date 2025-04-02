@@ -18,8 +18,10 @@
 		try {
 			let depth = data.get("CrawlDepth") ? data.get("CrawlDepth") : 2
 			let pageNumberLimit = data.get("PageNumberLimit") ? data.get("PageNumberLimit") : 50
+			sessionStorage.setItem("crawlerPageLimit", pageNumberLimit);
 			let userAgent = data.get("UserAgent") ? data.get('UserAgent') : "Mozilla/3.0"
 			let delay = data.get("RequestDelay") ? data.get("RequestDelay") : 1000
+			sessionStorage.setItem("crawlerDelay", delay);
 			const response = await fetch("http://127.0.0.1:8000/crawler", {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
@@ -39,13 +41,15 @@
 		} catch (error) {
 			console.error("Error starting crawler:", error);
 			crawling = false;
+			sessionStorage.removeItem("crawlerDelay");
+			sessionStorage.removeItem("crawlerPageLimit");
 		}
 	}
 </script>
 
 {#if !crawling}
 	<div class="page-wrapper">
-		<ToolStatusHeader active={["Configuration"]} title="Configuration"></ToolStatusHeader>
+		<ToolStatusHeader active={["Configuration"]}></ToolStatusHeader>
 
 		<div class="crawler-container">
 			<form class="crawler-form" on:submit={startCrawl}>

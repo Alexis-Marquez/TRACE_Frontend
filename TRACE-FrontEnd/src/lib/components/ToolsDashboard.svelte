@@ -29,7 +29,7 @@
 			tooltip: "Tries random values for fuzzing parameters",
 			action: "Set Up",
 			enabled: true,
-			callback: ()=>{goto("./fuzzer")}
+			callback: ()=>{goto("/fuzzer")}
 		},
 		{
 			name: "Brute Force Tester",
@@ -54,10 +54,10 @@
 			progress: 0,
 			status: "Ready to Go!",
 			color: "#ccc",
-			tooltip: "Scans the URLs",
+			tooltip: "This tool scans a website to gather links and map its structure. It helps you understand how pages connect, find broken links, and improve navigation.",
 			action: "Set Up",
 			enabled: true,
-			callback: ()=>{goto("./crawler")}
+			callback: ()=>{goto("/crawler")}
 		}
 	];
 </script>
@@ -83,7 +83,7 @@
 
 			<div class="tool-actions">
 				<div class="tooltip-wrapper">
-					<button class="info-btn" title={tool.tooltip}>
+					<button class="info-btn" data-tooltip={tool.tooltip}>
 						<img class="info-logo" src="./fontawesome-free-6.7.2-desktop/svgs/regular/circle-question.svg" alt="Info">
 					</button>
 				</div>
@@ -193,6 +193,28 @@
 		cursor: pointer;
 		font-weight: bold;
 		color: #000;
+	}
+
+	.info-btn::after {
+		content: attr(data-tooltip);
+		position: absolute;
+		background: #333;
+		color: white;
+		padding: 5px;
+		border-radius: 4px;
+		font-size: 12px;
+		white-space: nowrap;
+		opacity: 0;
+		visibility: hidden;
+		transition: opacity 0.2s;
+		bottom: 100%;
+		left: 50%;
+		transform: translateX(-50%);
+	}
+
+	.info-btn:hover::after {
+		opacity: 1;
+		visibility: visible;
 	}
 </style>
 

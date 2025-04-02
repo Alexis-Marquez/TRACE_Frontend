@@ -1,11 +1,10 @@
 <script>
     let props = $props()
     let activeStep = props.active
-    let title = props.title
 </script>
 
 <div class="form-header">
-    <h3>{title}</h3>
+    <h3>{activeStep[activeStep.length-1]}</h3>
     <div class="stepper">
         <div class="step {activeStep.includes('Configuration') ? 'active' : ''}">
             <div class="circle">{#if activeStep.includes('Configuration')}
