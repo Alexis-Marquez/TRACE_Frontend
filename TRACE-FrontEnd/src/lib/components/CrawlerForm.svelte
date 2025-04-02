@@ -1,6 +1,7 @@
 <script>
 	import { goto } from "$app/navigation";
 	import { fade, slide } from "svelte/transition";
+	import ToolStatusHeader from "$lib/components/ToolStatusHeader.svelte";
 	let crawling = false;
 
 	let res = null;
@@ -42,25 +43,7 @@
 
 {#if !crawling}
 	<div class="page-wrapper">
-		<div class="form-header">
-			<h3>Configuration</h3>
-			<div class="stepper">
-				<div class="step active">
-					<div class="circle"></div>
-					<span>Configuration</span>
-				</div>
-				<div class="line"></div>
-				<div class="step">
-					<div class="circle"></div>
-					<span>Running</span>
-				</div>
-				<div class="line"></div>
-				<div class="step">
-					<div class="circle"></div>
-					<span>Results</span>
-				</div>
-			</div>
-		</div>
+		<ToolStatusHeader></ToolStatusHeader>
 
 		<div class="crawler-container">
 			<form class="crawler-form" on:submit={startCrawl}>
@@ -128,53 +111,6 @@
 		background: white;
 	}
 
-	.form-header {
-		display: flex;
-		justify-content: space-between;
-		width: 100%;
-		max-width: 700px;
-		margin-bottom: 1rem;
-	}
-
-	.stepper {
-		display: flex;
-		align-items: center;
-		gap: 0.25rem;
-	}
-
-	.step {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		font-size: 0.75rem;
-		color: #999;
-	}
-
-	.step.active {
-		color: #4aa6b0;
-		font-weight: bold;
-	}
-
-	.circle {
-		width: 12px;
-		height: 12px;
-		border: 2px solid #ccc;
-		border-radius: 50%;
-		background: white;
-	}
-
-	.step.active .circle {
-		border-color: #4aa6b0;
-		background: #4aa6b0;
-	}
-
-	.line {
-		width: 30px;
-		height: 2px;
-		background: #ccc;
-        margin: 0 4px;
-	    align-self: center;
-	}
 
 	.crawler-container {
 		width: 100%;
