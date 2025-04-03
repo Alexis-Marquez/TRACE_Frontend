@@ -32,6 +32,12 @@
 
         if (!wordlistConfig.file)
             errors.file = "Please upload a wordlist file.";
+
+        if(passwordOptions.length <10 )
+            errors.plength = "Invalid password length";
+        if(usernameOptions.length <5)
+            errors.ulength = "Invalid username length";
+
     }
 
     // Handle file upload and process contents
@@ -98,7 +104,9 @@
                     class="input-field"
                     min="1"
                 />
+                {#if errors.ulength}<span class="error-msg">{errors.ulength}</span>{/if}
             </div>
+            
             <!-- password -->
             <div class="box" style="flex: 1;">
                 <h4>Password</h4>
@@ -133,7 +141,9 @@
                     class="input-field"
                     min="1"
                 />
+                {#if errors.plength}<span class="error-msg">{errors.plength}</span>{/if}
             </div>
+            
         </div>
     </form>
     <!-- Submit button -->
