@@ -6,10 +6,10 @@
     import {onDestroy, onMount} from "svelte";
     import {goto} from "$app/navigation";
     import ProgressBar from "$lib/components/ProgressBar.svelte";
-    import RunningResultsTableCrawler from "$lib/components/RunningResultsTableCrawler.svelte";
+    import RunningResultsTableFuzzer from "$lib/components/RunningResultsTableFuzzer.svelte";
 
-    let networkMap = $state([]);
-    let networkMapSize = $state(0)
+    let networkLinks = $state([]);
+    let networkLinksSize = $state(0)
     let intervalId
     let noContentCount = 0
     let delay = 1000
@@ -24,16 +24,16 @@
 
         intervalId= setInterval(async () => {
             try {
-                const response = await fetch("http://127.0.0.1:8000/crawler/data");
+                const response = await fetch("http://127.0.0.1:8000/fuzzer/data");
                 const data = await response.json();
                 currTime = performance.now() - startTime;
                 if (data.error) {
                     console.error("Error:", data.error);
                 } else if(response.status === 206) {
-                    networkMap = data.data;
-                    networkMapSize = countNodes(networkMap);
+                    networkLinks = data.data;
+                    networkLinksSize = networkLinks.length
                     if (page.url.searchParams.get('pageLimit')) {
-                        if (networkMapSize >= parseInt(page.url.searchParams.get('pageLimit').toString())) {
+                        if (networkLinksSize >= parseInt(page.url.searchParams.get('pageLimit').toString())) {
                             clearInterval(intervalId);
                             done = true
                             console.log("Fetching stopped, networkMap has reached the desired length.");
@@ -49,35 +49,22 @@
                     console.log("Fetching stopped, no content was found.");
                 }
                 if(response.status === 200){
-                    networkMap = data;
-                    networkMapSize = countNodes(networkMap);
+                    networkLinks = data;
                     done = true
-
                     clearInterval(intervalId)
                 }
-                requestCount = networkMapSize
+                requestCount = networkLinksSize
                 reqSec = currTime/requestCount/1000
             } catch (err) {
-                console.error("Failed to fetch crawler data:", err);
+                console.error("Failed to fetch fuzzer data:", err);
             }
         }, (delay*1.5))
     });
-    function countNodes(networkMap) {
-        let count = 0;
 
-        function traverse(nodes) {
-            for (const node of nodes) {
-                count++;
-                if (node.children && node.children.length > 0) {
-                    traverse(node.children);
-                }
-            }
-        }
-
-        traverse(networkMap);
-        return count;
-    }
-
+    $effect(()=>{
+        networkLinksSize = Object.keys(networkLinks).length;
+        console.log(networkLinksSize)
+    })
 
     onDestroy(() => {
         clearInterval(intervalId);
@@ -87,10 +74,10 @@
 
 
 
-<h1 class="page-header">Crawler</h1>
+<h1 class="page-header">Fuzzer</h1>
 <div class="page-wrapper">
-    {#key networkMapSize}
-    <ProgressBar currentCount={networkMapSize}></ProgressBar>
+    {#key networkLinksSize}
+    <ProgressBar currentCount={networkLinksSize}></ProgressBar>
         {/key}
     {#key done}
     <ToolStatusHeader active={["Configuration", "Running",...(done ? ["Results"] : [])]} title="Running"></ToolStatusHeader>
@@ -114,8 +101,8 @@
         </div>
     </div>
     <div class="table-display-area">
-        {#key networkMapSize}
-    <RunningResultsTableCrawler networkMap={networkMap} currSize={networkMapSize}></RunningResultsTableCrawler>
+        {#key networkLinks}
+    <RunningResultsTableFuzzer networkLinks={networkLinks} currSize={networkLinksSize}></RunningResultsTableFuzzer>
             {/key}
     </div>
 </div>
