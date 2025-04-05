@@ -1,5 +1,4 @@
 <script>
-    // @ts-nocheck
 
     import { goto } from "$app/navigation";
     import ToolStatusHeader from "$lib/components/ToolStatusHeader.svelte";
@@ -33,9 +32,9 @@
         if (!wordlistConfig.file)
             errors.file = "Please upload a wordlist file.";
 
-        if(passwordOptions.length <10 )
+        if (passwordOptions.length < 10)
             errors.plength = "Invalid password length";
-        if(usernameOptions.length <5)
+        if (usernameOptions.length < 5)
             errors.ulength = "Invalid username length";
 
     }
@@ -56,15 +55,15 @@
         if (Object.keys(errors).length > 0) return;
 
         console.log("Wordlist submitted:", wordlistConfig);
-        // TODO: Implement API call or processing logic
+        goto("/webScraper")
     }
 </script>
 
 <div class="container">
     <form class="wordlist-form" on:submit|preventDefault={submitWordlist}>
         <!-- File upload field -->
-         
-        <input type="file" accept=".txt" on:change={handleFileUpload} />
+
+        <input type="file" accept=".txt" on:change={handleFileUpload}/>
 
         {#if errors.file}<span class="error-msg">{errors.file}</span>{/if}
 
@@ -76,21 +75,21 @@
                 {#each Object.keys(usernameOptions) as key (key)}
                     {#if key !== "length"}
                         <div
-                            style="display: flex; justify-content: space-between; align-items: center; margin: 10px 0;"
+                                style="display: flex; justify-content: space-between; align-items: center; margin: 10px 0;"
                         >
                             <span
-                                >{key.charAt(0).toUpperCase() +
-                                    key.slice(1)}</span
+                            >{key.charAt(0).toUpperCase() +
+                            key.slice(1)}</span
                             >
                             <button
-                                class="toggle-container {usernameOptions[key]
+                                    class="toggle-container {usernameOptions[key]
                                     ? 'active'
                                     : ''}"
-                                on:click={() =>
+                                    on:click={() =>
                                     (usernameOptions[key] =
                                         !usernameOptions[key])}
-                                aria-pressed={usernameOptions[key]}
-                                aria-label="Toggle {key}"
+                                    aria-pressed={usernameOptions[key]}
+                                    aria-label="Toggle {key}"
                             >
                                 <div class="toggle"></div>
                             </button>
@@ -99,35 +98,35 @@
                 {/each}
                 <label for="username-length">Length</label>
                 <input
-                    type="number"
-                    bind:value={usernameOptions.length}
-                    class="input-field"
-                    min="1"
+                        type="number"
+                        bind:value={usernameOptions.length}
+                        class="input-field"
+                        min="1"
                 />
                 {#if errors.ulength}<span class="error-msg">{errors.ulength}</span>{/if}
             </div>
-            
+
             <!-- password -->
             <div class="box" style="flex: 1;">
                 <h4>Password</h4>
                 {#each Object.keys(passwordOptions) as key (key)}
                     {#if key !== "length"}
                         <div
-                            style="display: flex; justify-content: space-between; align-items: center; margin: 10px 0;"
+                                style="display: flex; justify-content: space-between; align-items: center; margin: 10px 0;"
                         >
                             <span
-                                >{key.charAt(0).toUpperCase() +
-                                    key.slice(1)}</span
+                            >{key.charAt(0).toUpperCase() +
+                            key.slice(1)}</span
                             >
                             <button
-                                class="toggle-container {passwordOptions[key]
+                                    class="toggle-container {passwordOptions[key]
                                     ? 'active'
                                     : ''}"
-                                on:click={() =>
+                                    on:click={() =>
                                     (passwordOptions[key] =
                                         !passwordOptions[key])}
-                                aria-pressed={passwordOptions[key]}
-                                aria-label="Toggle {key}"
+                                    aria-pressed={passwordOptions[key]}
+                                    aria-label="Toggle {key}"
                             >
                                 <div class="toggle"></div>
                             </button>
@@ -136,14 +135,14 @@
                 {/each}
                 <label for="password-length">Length</label>
                 <input
-                    type="number"
-                    bind:value={passwordOptions.length}
-                    class="input-field"
-                    min="1"
+                        type="number"
+                        bind:value={passwordOptions.length}
+                        class="input-field"
+                        min="1"
                 />
                 {#if errors.plength}<span class="error-msg">{errors.plength}</span>{/if}
             </div>
-            
+
         </div>
     </form>
     <!-- Submit button -->
@@ -159,6 +158,7 @@
         bottom: 20px;
         left: 50px;
     }
+
     .wordlist-form {
         display: flex;
         flex-direction: column;
@@ -167,6 +167,7 @@
         max-width: 700px;
         margin: auto;
     }
+
     input,
     textarea {
         padding: 0.5rem;
@@ -174,10 +175,12 @@
         border-radius: 6px;
         font-size: 1rem;
     }
+
     .error-msg {
         color: red;
         font-size: 0.9rem;
     }
+
     button {
         background: #90cdd2;
         border: none;
@@ -193,6 +196,7 @@
         margin: 0;
         padding: 0;
     }
+
     .container {
         display: flex;
         height: 100vh;
@@ -207,6 +211,7 @@
         margin-bottom: 15px;
         box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
     }
+
     .toggle-container {
         display: flex;
         align-items: center;
@@ -219,6 +224,7 @@
         padding: 3px;
         position: relative;
     }
+
     .toggle {
         width: 16px;
         height: 16px;
@@ -226,12 +232,15 @@
         border-radius: 50%;
         transition: 0.3s;
     }
+
     .toggle-container.active {
         background: #64b5f6;
     }
+
     .toggle-container.active .toggle {
         transform: translateX(20px);
     }
+
     .input-field {
         width: 100%;
         padding: 5px;
@@ -239,6 +248,7 @@
         border-radius: 4px;
         margin-top: 5px;
     }
+
     .btn {
         background: #64b5f6;
         color: white;

@@ -51,7 +51,6 @@
 			PageLimit: config.PageLimit,
 			WordList: config.WordList
 		};
-
 		try {
 			const res = await fetch("http://127.0.0.1:8000/fuzzer", {
 				method: "POST",
@@ -60,7 +59,7 @@
 			});
 
 			if (!res.ok) throw new Error("Fuzzing failed");
-			goto("/parameterFuzzing/running");
+			goto("/fuzzer/run");
 		} catch (err) {
 			console.error(err);
 		}
