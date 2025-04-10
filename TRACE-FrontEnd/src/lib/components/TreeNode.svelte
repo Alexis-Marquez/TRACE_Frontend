@@ -1,7 +1,7 @@
 <script>
     let props = $props();
-    let ip = props.ip || "Unknown IP";
-    let path = props.path || "Unknown Path";
+    let ip = props.ip;
+    let path = props.path;
 </script>
 
 <div class="tree-node {props.root ? 'root' : ''}">
@@ -24,7 +24,7 @@
         background: white;
         border: 2px solid #006699;
         border-radius: 10px;
-        padding: 10px;
+        padding: 5px;
         margin: 10px auto;
         text-align: center;
         height: 10vh;
@@ -34,7 +34,7 @@
         justify-content: space-around;
     }
     .dividing-line{
-        width: 90%;
+        width: 100%;
         height: 2%;
         background: darkgrey;
     }

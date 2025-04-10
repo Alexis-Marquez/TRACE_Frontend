@@ -4,21 +4,17 @@
     import Tree from './Tree.svelte';
 
     let props = $props()
-    let networkMap = props.networkMap;
+    let networkMap = $state()
+    networkMap = props.networkMap;
+    let scale = props.scale;
 </script>
 
-<div class="network-tree">
+<div class="network-tree" style:transform="scale({scale});">
         {#each networkMap as node}
             <div class="tree-branch">
                 <TreeNode ip={node.ip} path={node.path}/>
-                {#if node.children.length > 0}
+                {#if node.children && node.children.length > 0}
                     <div class="children">
-                        <svg class="tree-line">
-                            <line x1="50%" y1="0" x2="50%" y2="4%" stroke="black" stroke-width="2" />
-                        </svg>
-                        <svg class="horizontal-line">
-                            <line x1="5%" y1="4%" x2="125%" y2="4%" stroke="black" stroke-width="2" />
-                        </svg>
                         <Tree networkMap={node.children} />
                     </div>
                 {/if}
@@ -29,23 +25,9 @@
 <style>
     .network-tree {
         display: flex;
-        justify-content: center;
         position: relative;
-        width: 100%;
-    }
-    .tree-line {
-        position: absolute;
-        left: 50%;
-        width: 2px;
-        height: 100%;
-        pointer-events: none;
-    }
-    .horizontal-line{
-        position: absolute;
-        width: fit-content;
-        height: 2px;
-        top: 4%;
-        pointer-events: none;
+        min-width: 25%;
+        min-height: 100%;
     }
 
     .children {
@@ -53,12 +35,12 @@
         justify-content: center;
         align-items: center;
         position: relative;
-        margin-top: 10px;
+        margin-top: 2px;
     }
     .tree-branch{
-        margin-top: 1vw;
-        margin-left: 1vw;
-        margin-right: 1vw;
+        margin-top: 2px;
+        margin-left: 2px;
+        margin-right: 2px;
     }
 
 
