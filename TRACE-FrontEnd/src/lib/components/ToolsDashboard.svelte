@@ -38,7 +38,8 @@
 			color: "#ccc",
 			tooltip: "Attempts brute force attacks",
 			action: "Set Up",
-			enabled: false
+			enabled: true,
+			callback: ()=>{goto("/bruteForcer")}
 		},
 		{
 			name: "Intruder",
