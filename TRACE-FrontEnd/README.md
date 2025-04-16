@@ -1,6 +1,6 @@
 # TRACE System – Fullstack Reconnaissance Platform
 
-This repository contains the fullstack implementation of the TRACE (Threat Reconnaissance and Automated Credential Evaluation) system. TRACE enables automated scanning, crawling, and testing of web applications using a unified interface. It includes both the backend modules and a frontend SvelteKit-based dashboard.
+This repository contains the fullstack implementation of the TRACE (Targeted Reconnaissance for Advanced Content Exploitation) system. TRACE enables automated scanning, crawling, and testing of web applications using a unified interface. It includes both the backend modules and a frontend SvelteKit-based dashboard.
 
 ---
 
